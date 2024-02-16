@@ -14,7 +14,7 @@ module CompanyToolbox
 		yearly_sum = 0
 		for m in 1..12
 			monthly_sum = MonthlyResult.where("EXTRACT(year FROM date) = ? AND EXTRACT(month FROM date) = ?", year, m).map{|res| res.revenue}.sum
-			hash[Date::ABBR_MONTHNAMES[m]] = monthly_sum.to_f
+			hash[Date::ABBR_MONTHNAMES[m].downcase] = monthly_sum.to_f
 			yearly_sum += monthly_sum
 		end
 		hash['total'] = yearly_sum.to_f
@@ -31,7 +31,7 @@ module CompanyToolbox
 		hash = {}
 		hash['title'] = name
 		monthly_results.where("EXTRACT(year FROM date) = ?", year).each do |result| 
-			hash["#{Date::ABBR_MONTHNAMES[result.date.month]}"] = result.revenue.to_f 
+			hash["#{Date::ABBR_MONTHNAMES[result.date.month].downcase}"] = result.revenue.to_f 
 		end
 		hash['total'] = yearly_revenue(year)
 		hash
