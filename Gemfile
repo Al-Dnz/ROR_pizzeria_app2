@@ -76,3 +76,5 @@ gem "rack-cors", "~> 2.0"
 gem "faker", "~> 3.2"
 
 gem "table_print", "~> 1.5"
+
+gem "colorize", "~> 1.1"
