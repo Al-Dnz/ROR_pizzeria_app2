@@ -62,6 +62,12 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem "faker", "~> 3.2"
+
+  gem "table_print", "~> 1.5"
+
+  gem "colorize", "~> 1.1"
 end
 
 group :test do
@@ -73,8 +79,4 @@ end
 
 gem "rack-cors", "~> 2.0"
 
-gem "faker", "~> 3.2"
 
-gem "table_print", "~> 1.5"
-
-gem "colorize", "~> 1.1"
