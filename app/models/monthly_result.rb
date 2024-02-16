@@ -1,0 +1,2 @@
+class MonthlyResult < ApplicationRecord
+end
