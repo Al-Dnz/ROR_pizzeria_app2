@@ -18,6 +18,7 @@ module CompanyToolbox
 			yearly_sum += monthly_sum
 		end
 		hash['total'] = yearly_sum.to_f
+		hash['average_revenue'] = Company.average_yearly_revenue(year)
 		arr << hash
 		JSON.generate(arr)
 	end
