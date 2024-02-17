@@ -22,6 +22,10 @@ module CompanyToolbox
 		JSON.generate(arr)
 	end
 
+	def Company.list_of_year(year)
+		Company.joins(:monthly_results).where('extract(year from monthly_results.date) = ?', year).distinct
+	end
+
 	def yearly_revenue(year)
 		return nil if monthly_results.where("EXTRACT(year FROM date) = ?", year).empty?
 		monthly_results.where("EXTRACT(year FROM date) = ?", year).map{|res| res.revenue}.sum.to_f
