@@ -1,6 +1,6 @@
 module MonthlyResultToolbox
 
 	def MonthlyResult.available_years
-		MonthlyResult.distinct.pluck(Arel.sql("EXTRACT(year FROM date)")).map(&:to_i)
+		MonthlyResult.distinct.pluck(Arel.sql("EXTRACT(year FROM date)")).map(&:to_i).sort
 	end
 end
