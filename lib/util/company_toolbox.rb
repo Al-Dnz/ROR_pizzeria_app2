@@ -6,7 +6,7 @@ module CompanyToolbox
 
 	def Company.serialize_yearly_data(year)
 		arr = []
-		Company.all.each do |company|
+		Company.all.sort_by {|company| company.yearly_revenue(year)}.each do |company|
 			 arr << company.yearly_data_hash(year)
 		end
 		hash = {}
@@ -18,6 +18,7 @@ module CompanyToolbox
 			yearly_sum += monthly_sum
 		end
 		hash['total'] = yearly_sum.to_f
+		hash['number_of_companies'] = arr.size
 		hash['average_revenue'] = Company.average_yearly_revenue(year)
 		arr << hash
 		JSON.generate(arr)
