@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import Table from "./table";
-import SelectYear from "./select_year_component";
-import fetchData from "./fecth_data_util"; 
+import Table from "./components/table_component";
+import SelectYear from "./components/select_year_component";
+import fetchData from "./utils/fecth_data_util"; 
 
 const App = ({ arg }) => {
 	const [dataset, setDataSet] = React.useState(arg.dataset);
