@@ -22,9 +22,14 @@
 	```
 		rails db:migrate db:seed
 	```
-* Set Dependencies
+* Set RoR Dependencies
 	```
 		bundle
+	```
+
+* Set Js Dependencies
+	```
+		yarn install
 	```
 
 ##  Launch
