@@ -84,6 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 		targetApiUrl: targetApiUrl,
 		error: error
 	}
-	console.log(obj);
+
 	root.render(<App arg= { obj } />);
 });
