@@ -2,13 +2,14 @@ module CompanyToolbox
 
 	# Return the average yearly_revenue of the year between all available companies
 	def Company.average_yearly_revenue(year)
-		sprintf("%.2f",(Company.all.each.map {|company| company.yearly_revenue(year) || 0}.sum / Company.all.count).round(2))
+		companies = Company.list_of_year(year)
+		sprintf("%.2f",(companies.each.map {|company| company.yearly_revenue(year) || 0}.sum / companies.count).round(2)).to_f
 	end
 
 	# Set the data to produce the dataset that will be used in the frontend app
 	def Company.serialize_yearly_data(year)
 		arr = []
-		Company.all.sort_by {|company| company.yearly_revenue(year)}.each do |company|
+		Company.list_of_year(year).sort_by {|company| company.yearly_revenue(year)}.each do |company|
 			 arr << company.yearly_data_hash(year)
 		end
 		hash = {}
@@ -26,7 +27,7 @@ module CompanyToolbox
 		JSON.generate(arr)
 	end
 
-	# List all companies that have balance sheets for this year
+	# List all companies that have balance sheets for this year (at least one monthly result)
 	def Company.list_of_year(year)
 		Company.joins(:monthly_results).where('extract(year from monthly_results.date) = ?', year).distinct
 	end
@@ -42,9 +43,9 @@ module CompanyToolbox
 		hash = {}
 		hash['title'] = name
 		monthly_results.where("EXTRACT(year FROM date) = ?", year).each do |result| 
-			hash["#{Date::ABBR_MONTHNAMES[result.date.month].downcase}"] = sprintf("%.2f", result.revenue.to_f)
+			hash["#{Date::ABBR_MONTHNAMES[result.date.month].downcase}"] = sprintf("%.2f", result.revenue).to_f
 		end
-		hash['total'] = sprintf("%.2f",yearly_revenue(year))
+		hash['total'] = sprintf("%.2f",yearly_revenue(year)).to_f
 		hash
 	end
 
