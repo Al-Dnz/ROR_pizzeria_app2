@@ -50,7 +50,9 @@ const Table = ( { dataset }: TableProps ) => {
   const renderMonthColumns = (obj: MonthlyData) => {
     const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
     return months.map(month => (
-      <td key={`${obj.title}_${month}_th`}> {obj[month]} € </td>
+      <td key={`${obj.title}_${month}_th`}>
+		 { obj[month]? <span> {obj[month]} €</span> : <span> NC. </span> } 
+		</td>
     ));
   };
 
