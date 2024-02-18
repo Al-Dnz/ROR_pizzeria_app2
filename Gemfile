@@ -78,3 +78,5 @@ group :test do
 end
 
 gem "rack-cors", "~> 2.0"
+
+gem "date_validator", "~> 0.12.0"

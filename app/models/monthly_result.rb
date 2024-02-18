@@ -1,18 +1,13 @@
 class MonthlyResult < ApplicationRecord
+	require 'date'
 	include  MonthlyResultToolbox
 	belongs_to :company
-	before_validation -> (result) { result.date = result.date.end_of_month }
+	before_validation -> (result) { result.date = result.date.end_of_month rescue date }
 
-	validates :date, presence: true
+	validates :date, presence: true, date: true
+	validates :date, date: { before: Proc.new { (Time.now + 1.month ).beginning_of_month} }
 	validates :date, uniqueness: { scope: :company_id }
-		{message: 'A monthly value with this date still exists'}		
-	validates :revenue, presence: true, numericality: { greater_than_or_equal_to: 0, less_than: BigDecimal(10**6) }
-	validate :company_id_exists
-		{message: 'Associated company does not exist'}	
-  
-	def company_id_exists
-		return false if Company.find_by_id(self.company_id).nil?
-		true
-	end
+	validates :revenue, presence: true, numericality: { greater_than: 0, less_than: BigDecimal(10**6) }
+	
 
 end
