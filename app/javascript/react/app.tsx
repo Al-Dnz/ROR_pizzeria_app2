@@ -3,13 +3,15 @@ import * as ReactDOM from "react-dom/client";
 import Table from "./components/table_component";
 import SelectYear from "./components/select_year_component";
 import fetchData from "./utils/fecth_data_util"; 
+import MonthlyData from "./interfaces/monthly_data_interface";
+import InfoObj from "./interfaces/info_obj_interface";
 
 const App = ({ arg }) => {
 	const [dataset, setDataSet] = React.useState(arg.dataset);
 	const [error, setError] = React.useState(arg.error);
 
-	const updateDataSet = async (newYear) => {
-		let newDataset;
+	const updateDataSet = async (newYear: string) => {
+		let newDataset: (MonthlyData|InfoObj)[];
 		try {
 			newDataset = await fetchData(`${arg.targetApiUrl}`,`${newYear}`);
 		} catch (err) {
@@ -23,7 +25,7 @@ const App = ({ arg }) => {
 		setDataSet(newDataset);
 	};
 
-	const  renderRegular = (
+	const renderRegular = (
 		<div> 
 			<SelectYear years={arg.years_arr}  
 						defaultYear={arg.current_year} 
@@ -42,10 +44,9 @@ const App = ({ arg }) => {
 	)
 
 	return  error.status == true ? renderError : renderRegular
-	
 }
 
-const currentYear = (years_arr) => {
+const currentYear = (years_arr: number[]) => {
 	const year = new Date().getFullYear();
 	return years_arr.includes(year) ? `${year}` : `${years_arr[years_arr.length - 1]}`;
 }
@@ -54,17 +55,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const rootDiv = document.getElementById("root")!
 	const root = ReactDOM.createRoot(rootDiv);
 
-	const targetApiUrl = "http://localhost:3000/yearly_data"
+	const targetApiUrl = "http://localhost:3000/yearly_data";
+	const yearsApiUrl = "http://localhost:3000/available_years";
 
-	let error =
+	let error: {status: boolean, message: string}  =
 	{
 		status: false,
 		message: ''
 	}
-	let dataset, years_arr, current_year;
+	let dataset:(MonthlyData|InfoObj)[] = [];
+	let years_arr: number[] = [];
+	let current_year: string = "";
 	
 	try {
-		years_arr = await fetchData("http://localhost:3000/available_years");
+		years_arr = await fetchData(yearsApiUrl);
 		current_year = currentYear(years_arr);
 		dataset = await fetchData(targetApiUrl ,`${current_year}`);
 	} catch (err) {
@@ -79,6 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		current_year: current_year,
 		targetApiUrl: targetApiUrl,
 		error: error
-	}	
+	}
+	console.log(obj);
 	root.render(<App arg= { obj } />);
 });
