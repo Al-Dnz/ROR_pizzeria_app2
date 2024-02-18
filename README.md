@@ -29,7 +29,7 @@
 
 ##  Launch
 ```
-	bin/dev
+bin/dev
 ```
 
 ## Home view
