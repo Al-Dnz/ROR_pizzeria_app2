@@ -1,7 +1,7 @@
 module CompanyToolbox
 
 	def Company.average_yearly_revenue(year)
-		Company.all.each.map {|company| company.yearly_revenue(year) || 0}.sum / Company.all.count
+		sprintf("%.2f",(Company.all.each.map {|company| company.yearly_revenue(year) || 0}.sum / Company.all.count).round(2))
 	end
 
 	def Company.serialize_yearly_data(year)
@@ -37,9 +37,9 @@ module CompanyToolbox
 		hash = {}
 		hash['title'] = name
 		monthly_results.where("EXTRACT(year FROM date) = ?", year).each do |result| 
-			hash["#{Date::ABBR_MONTHNAMES[result.date.month].downcase}"] = result.revenue.to_f 
+			hash["#{Date::ABBR_MONTHNAMES[result.date.month].downcase}"] = sprintf("%.2f", result.revenue.to_f)
 		end
-		hash['total'] = yearly_revenue(year)
+		hash['total'] = sprintf("%.2f",yearly_revenue(year))
 		hash
 	end
 
