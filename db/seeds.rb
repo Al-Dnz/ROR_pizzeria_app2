@@ -30,7 +30,7 @@ def monthly_results_gen(year, ending_year)
 end
 
 beginning_year = 2020
-ending_year = 2025
+ending_year = 2024
 number_of_companies = 5
 
 # Create #{number_of_companies} different companies
