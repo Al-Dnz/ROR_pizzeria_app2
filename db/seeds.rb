@@ -20,7 +20,7 @@ def monthly_results_gen(year, ending_year)
 					revenue: rand(50.00...1000.00),
 					company_id: company.id
 				)
-			i += 1 if result.save
+				i += 1 if result.save
 			end
 			month += 1
 		end
@@ -29,9 +29,13 @@ def monthly_results_gen(year, ending_year)
 	puts "seeds.rb: #{i} MonthlyResult instances have been created"
 end
 
-year = 2020
-ending_year = 2022
-number_of_companies = 2
+beginning_year = 2020
+ending_year = 2025
+number_of_companies = 5
 
+# Create #{number_of_companies} different companies
 companies_gen(number_of_companies)
-monthly_results_gen(year, ending_year)
+
+# Create monthly results for each months from #{beginning_year} to #{ending_year} for each existing companies
+monthly_results_gen(beginning_year, ending_year)
+
