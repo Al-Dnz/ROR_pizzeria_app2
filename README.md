@@ -2,13 +2,13 @@
 
 ## Configuration
 
-* Ruby version
+* Ruby version: 
 	ruby 3.0.0
-* Rails version
+* Rails version: 
 	Rails 7.0.8
-* CSS
+* CSS: 
 	Bootstrap
-* JS Bundler
+* JS Bundler: 
 	esbuild
 
 ## SETUP
