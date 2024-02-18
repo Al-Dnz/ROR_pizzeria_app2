@@ -33,5 +33,5 @@
 ```
 
 ## Home view
-[localhost:3000](http://loclahost:3000)
+[localhost:3000](http://localhost:3000)
 
