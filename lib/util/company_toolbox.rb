@@ -23,6 +23,7 @@ module CompanyToolbox
 		hash['total'] = yearly_sum.to_f
 		hash['number_of_companies'] = arr.size
 		hash['average_revenue'] = Company.average_yearly_revenue(year)
+		hash['info_obj'] = true
 		arr << hash
 		JSON.generate(arr)
 	end
