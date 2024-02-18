@@ -1,9 +1,11 @@
 module CompanyToolbox
 
+	# Return the average yearly_revenue of the year between all available companies
 	def Company.average_yearly_revenue(year)
 		sprintf("%.2f",(Company.all.each.map {|company| company.yearly_revenue(year) || 0}.sum / Company.all.count).round(2))
 	end
 
+	# Set the data to produce the dataset that will be used in the frontend app
 	def Company.serialize_yearly_data(year)
 		arr = []
 		Company.all.sort_by {|company| company.yearly_revenue(year)}.each do |company|
@@ -24,15 +26,18 @@ module CompanyToolbox
 		JSON.generate(arr)
 	end
 
+	# List all companies that have balance sheets for this year
 	def Company.list_of_year(year)
 		Company.joins(:monthly_results).where('extract(year from monthly_results.date) = ?', year).distinct
 	end
 
+	# Return the yearly_revenue of the instance
 	def yearly_revenue(year)
 		return nil if monthly_results.where("EXTRACT(year FROM date) = ?", year).empty?
 		monthly_results.where("EXTRACT(year FROM date) = ?", year).map{|res| res.revenue}.sum.to_f
 	end
 
+	# Return a hash with the name of the instance, the months results and the yearly revenue
 	def yearly_data_hash(year)
 		hash = {}
 		hash['title'] = name
