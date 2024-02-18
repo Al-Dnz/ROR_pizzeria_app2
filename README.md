@@ -11,7 +11,7 @@
 * JS Bundler: 
 	esbuild
 
-## SETUP
+## Setup
 
 * Database creation
 	```
